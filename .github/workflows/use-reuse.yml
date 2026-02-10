@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
@@ -36,7 +36,7 @@ jobs:
         id: run-tests
         run: npm run test
       - name: Upload test report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: test.json
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
@@ -59,13 +59,14 @@ jobs:
         id: build-website
         run: npm run build
       - name: Upload artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: dist-files
           path: dist
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yml
+    secrets: inherit
   report:
     needs: [lint,deploy]
     if: failure()
