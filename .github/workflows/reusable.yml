@@ -1,5 +1,10 @@
 name : Reusable Workflow
-on: workflow_call
+on: 
+    workflow_call:
+        inputs:
+            artifact-name:
+                required: true
+                type: string
 jobs:
     deploy:
         name: Deploy to production
@@ -7,3 +12,9 @@ jobs:
         steps:
             - name: Display message
               run: echo "Deploying to production environment"
+            - name: Download artifacts
+             uses: actions/download-artifact@v5
+             with:
+                 name: ${{ inputs.artifact-name }}
+            - name: List contents
+              run: ls -la
